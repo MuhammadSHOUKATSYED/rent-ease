@@ -1,80 +1,73 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import { Stack } from "expo-router";
+
 import { colors } from "@/constants/colors";
 import { useColorScheme } from "@/lib/useColorScheme";
-import { AntDesign, Feather } from "@expo/vector-icons";
-import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function ProtectedLayout() {
+export const unstable_settings = {
+	initialRouteName: "(root)",
+};
+
+export default function AppLayout() {
 	const { colorScheme } = useColorScheme();
 
 	return (
-		<Tabs
-			screenOptions={{
-				headerShown: false,
-				tabBarStyle: {
-					backgroundColor:
+		<Stack screenOptions={{ headerShown: false }}>
+			<Stack.Screen name="(protected)" />
+			<Stack.Screen name="welcome" />
+			<Stack.Screen
+				name="sign-up"
+				options={{
+					presentation: "modal",
+					headerShown: true,
+					headerTitle: "Sign Up",
+					headerStyle: {
+						backgroundColor:
+							colorScheme === "dark"
+								? colors.dark.background
+								: colors.light.background,
+					},
+					headerTintColor:
 						colorScheme === "dark"
-							? colors.dark.background
-							: colors.light.background,
-				},
-				tabBarActiveTintColor:
-					colorScheme === "dark"
-						? colors.dark.foreground
-						: colors.light.foreground,
-				tabBarShowLabel: true,  // Show labels below icons
-			}}
-		>
-			<Tabs.Screen
-				name="index"
-				options={{
-					title: "Home",
-					tabBarLabel: "Home",
-					tabBarIcon: ({ color, size }) => (
-						<Feather name="home" color={color} size={size} />
-					),
+							? colors.dark.foreground
+							: colors.light.foreground,
 				}}
 			/>
-			<Tabs.Screen
-				name="chats"
+			<Stack.Screen
+				name="sign-in"
 				options={{
-					title: "Chats",
-					tabBarLabel: "Chats",
-					tabBarIcon: ({ color, size }) => (
-						<AntDesign name="message1" color={color} size={size} />
-					),
+					presentation: "modal",
+					headerShown: true,
+					headerTitle: "Sign In",
+					headerStyle: {
+						backgroundColor:
+							colorScheme === "dark"
+								? colors.dark.background
+								: colors.light.background,
+					},
+					headerTintColor:
+						colorScheme === "dark"
+							? colors.dark.foreground
+							: colors.light.foreground,
 				}}
 			/>
-			<Tabs.Screen
-				name="rent"
+			<Stack.Screen
+				name="modal"
 				options={{
-					title: "Sell",
-					tabBarLabel: "Add",
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name="add-circle-outline" size={size} color={color} />
-					),
+					presentation: "modal",
+					headerShown: true,
+					headerTitle: "Modal",
+					headerStyle: {
+						backgroundColor:
+							colorScheme === "dark"
+								? colors.dark.background
+								: colors.light.background,
+					},
+					headerTintColor:
+						colorScheme === "dark"
+							? colors.dark.foreground
+							: colors.light.foreground,
 				}}
 			/>
-			<Tabs.Screen
-				name="listings"
-				options={{
-					title: "Listings",
-					tabBarLabel: "My Listings",
-					tabBarIcon: ({ color, size }) => (
-						<AntDesign name="appstore-o" color={color} size={size} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="profile"
-				options={{
-					title: "Profile",
-					tabBarLabel: "Profile",
-					tabBarIcon: ({ color, size }) => (
-						<AntDesign name="user" color={color} size={size} />
-					),
-				}}
-			/>
-		</Tabs>
+		</Stack>
 	);
 }
